@@ -1,0 +1,68 @@
+---
+interface Props {
+  durationIn?: number;
+  durationOut?: number;
+  easeIn?: string;
+  easeOut?: string;
+  displacementAngle?: number;
+  intensity?: number;
+  zoom?: number;
+  imageRotation?: number;
+  noiseSpeed?: number;
+  noiseScale?: number;
+  rgbShiftIntensity?: number;
+  debug?: boolean;
+}
+
+const {
+  durationIn = 0.8,
+  durationOut = 0.8,
+  easeIn = 'power2.out',
+  easeOut = 'power2.out',
+  displacementAngle = 0,
+  intensity = 1,
+  zoom = 0,
+  imageRotation = 0,
+  noiseSpeed = 0.5,
+  noiseScale = 6.0,
+  rgbShiftIntensity = 0,
+  debug = false,
+} = Astro.props;
+---
+
+<div
+  id="webgl-hover-config"
+  data-debug={String(debug)}
+  data-duration-in={durationIn}
+  data-duration-out={durationOut}
+  data-ease-in={easeIn}
+  data-ease-out={easeOut}
+  data-displacement-angle={displacementAngle}
+  data-intensity={intensity}
+  data-zoom={zoom}
+  data-image-rotation={imageRotation}
+  data-noise-speed={noiseSpeed}
+  data-noise-scale={noiseScale}
+  data-rgb-shift-intensity={rgbShiftIntensity}
+  style="display: none;"
+>
+</div>
+
+<slot />
+
+<script>
+  import { initWebglHover } from '@/lib/webgl-hover';
+  initWebglHover();
+</script>
+
+<style is:global>
+  #canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+  }
+</style>

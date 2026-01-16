@@ -1,0 +1,115 @@
+---
+import WebglHoverImages from "../components/WebglHoverImages.astro";
+import WebglHoverImage from "../components/WebglHoverImage.astro";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<h1>@ivanalbizu/astro-webgl-hover</h1>
+		<main class="slides">
+			<WebglHoverImages
+				durationIn={1.2}
+				durationOut={1.2}
+				easeIn="elastic.out(1, 0.3)"
+				debug={true}
+			>
+				<WebglHoverImage
+					texture0="chair-02.jpg"
+					texture1="chair-01.jpg"
+					map="displacements/01.jpg"
+					displacementAngle={10}
+					intensity={0.7}
+					alt="Silla de diseño moderno"
+				/>
+				<WebglHoverImage
+					texture0="one-02.jpg"
+					texture1="one-01.jpg"
+					map="displacements/02.jpg"
+					intensity={0.168}
+					noiseSpeed={0.44}
+					noiseScale={3.66}
+					durationIn={2.0}
+					durationOut={2.0}
+					easeIn="elastic.out(1, 0.3)"
+					alt="Modelo posando con estilo"
+				/>
+				<WebglHoverImage
+					texture0="mujer-02.jpg"
+					texture1="mujer-01.jpg"
+					map="displacements/03.jpg"
+					durationIn={0.8}
+					durationOut={0.8}
+					easeIn="power2.out"
+					zoom={0.1}
+					imageRotation={5}
+					alt="Retrato de mujer"
+				/>
+				<WebglHoverImage
+					texture0="woman-01.jpg"
+					texture1="woman-02.jpg"
+					map="displacements/05.jpg"
+					durationIn={1.5}
+					durationOut={1.5}
+					intensity={0.8}
+					rgbShiftIntensity={0.8}
+					alt="Mujer en la ciudad"
+				/>
+				<WebglHoverImage
+					texture0="clothes-01.jpg"
+					texture1="clothes-02.jpg"
+					map="displacements/04.jpg"
+					intensity={0.5}
+					alt="Ropa de moda"
+				/>
+				<WebglHoverImage
+					texture0="dark-01.jpg"
+					texture1="dark-02.jpg"
+					map="displacements/06.jpg"
+					alt="Ambiente oscuro y elegante"
+				/>
+			</WebglHoverImages>
+		</main>
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		min-height: 100%;
+	}
+	body {
+		font-family: sans-serif;
+		overflow-x: hidden;
+		margin: 0;
+	}
+	h1 {
+		text-align: center;
+	}
+	.slides {
+		display: grid;
+		justify-content: space-between;
+		gap: 16px;
+		flex-wrap: wrap;
+		width: 1020px;
+		max-width: 100%;
+		margin: auto;
+		grid-template-columns: 1fr;
+	}
+	@media (min-width: 450px) {
+		.slides {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	@media (min-width: 780px) {
+		.slides {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+	}
+</style>

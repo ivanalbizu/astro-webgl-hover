@@ -1,0 +1,61 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  texture0: string;
+  texture1: string;
+  map: string;
+  durationIn?: number;
+  durationOut?: number;
+  easeIn?: string;
+  easeOut?: string;
+  displacementAngle?: number; // Ángulo del desplazamiento en grados
+  intensity?: number;
+  zoom?: number;
+  imageRotation?: number; // Rotación de la imagen en grados
+  noiseSpeed?: number;
+  noiseScale?: number;
+  rgbShiftIntensity?: number;
+  alt?: string;
+  imgAttributes?: HTMLAttributes<'img'>;
+  width?: number;
+  height?: number;
+  width1?: number;
+  height1?: number;
+}
+
+const { texture0, texture1, map, durationIn, durationOut, easeIn, easeOut, displacementAngle, intensity, zoom, imageRotation, noiseSpeed, noiseScale, rgbShiftIntensity, alt = "", imgAttributes = {}, width = 382, height = 640, width1, height1, ...rest } = Astro.props;
+
+const { loading = "lazy", ...restImgAttributes } = imgAttributes;
+const finalWidth1 = width1 || width;
+const finalHeight1 = height1 || height;
+---
+
+<div class:list={["whi-slide", rest.class]} {...rest} data-width={width} data-height={height} data-width1={finalWidth1} data-height1={finalHeight1} data-duration-in={durationIn} data-duration-out={durationOut} data-ease-in={easeIn} data-ease-out={easeOut} data-displacement-angle={displacementAngle} data-intensity={intensity} data-zoom={zoom} data-image-rotation={imageRotation} data-noise-speed={noiseSpeed} data-noise-scale={noiseScale} data-rgb-shift-intensity={rgbShiftIntensity}>
+  <div class="whi-plane">
+    <img data-sampler="texture0" src={texture0} alt={alt} loading={loading} width={width} height={height} {...restImgAttributes} crossorigin="anonymous" />
+    <img data-sampler="texture1" src={texture1} aria-hidden="true" alt="" loading={loading} crossorigin="anonymous" />
+    <img data-sampler="map" src={map} aria-hidden="true" alt="" loading={loading} crossorigin="anonymous" />
+  </div>
+  <slot />
+</div>
+
+<style lang="scss" define:vars={{ width, height }}>
+  .whi-plane {
+    aspect-ratio: var(--width) / var(--height);
+    position: relative;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+    }
+    img[data-sampler="texture0"] {
+      opacity: 1;
+      transition: opacity 0.5s ease-out;
+    }
+  }
+</style>
