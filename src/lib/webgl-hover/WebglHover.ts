@@ -1,5 +1,5 @@
 /**
- * Clase principal para manejar efectos WebGL hover con Curtains.js
+ * Main class for handling WebGL hover effects with Curtains.js
  */
 
 import { Plane } from 'curtainsjs';
@@ -37,7 +37,7 @@ export class WebglHover {
     this.webGLCurtain = curtains;
     this.planeElement = planeElement;
 
-    // Bind handlers para poder hacer cleanup
+    // Bind handlers for proper cleanup on destroy
     this.boundHandleMouseEnter = this.handleMouseEnter.bind(this);
     this.boundHandleMouseOut = this.handleMouseOut.bind(this);
 
@@ -53,6 +53,7 @@ export class WebglHover {
     this.intensity = options.intensity;
     this.displacementAngle = options.displacementAngle;
 
+    // Convert intensity + angle to displacement vector [x, y]
     const displacement = calculateDisplacementVector(options.intensity, options.displacementAngle);
 
     this.params = {
@@ -90,6 +91,7 @@ export class WebglHover {
     }
   }
 
+  // Only update time uniform when animating (performance optimization)
   private startRenderLoop(): void {
     this.plane.onRender(() => {
       if (this.isAnimating) {
@@ -156,6 +158,7 @@ export class WebglHover {
     }
   }
 
+  // Manual progress control (used by debug panel timeline)
   public setProgress(progress: number): void {
     if (!this.plane) return;
 

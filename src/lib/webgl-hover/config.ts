@@ -1,5 +1,5 @@
 /**
- * Configuración e interfaces para WebGL Hover
+ * Configuration and interfaces for WebGL Hover
  */
 
 export interface WebglHoverOptions {

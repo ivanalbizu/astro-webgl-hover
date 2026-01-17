@@ -1,5 +1,5 @@
 /**
- * Funciones utilitarias para WebGL Hover
+ * Utility functions for WebGL Hover
  */
 
 export function getAttributeAsFloat(

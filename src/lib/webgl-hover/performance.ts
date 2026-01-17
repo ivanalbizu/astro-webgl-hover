@@ -1,5 +1,5 @@
 /**
- * Detección de rendimiento y fallbacks para WebGL Hover
+ * Performance detection and fallbacks for WebGL Hover
  */
 
 interface NavigatorWithExtensions extends Navigator {
@@ -12,18 +12,18 @@ interface NavigatorWithExtensions extends Navigator {
 export function isLowPerformance(): boolean {
   const nav = navigator as NavigatorWithExtensions;
 
-  // 1. Detectar modo "Ahorro de datos" del navegador/SO
+  // 1. Detect "Data Saver" mode from Browser/OS
   if (nav.connection?.saveData) {
     return true;
   }
 
-  // 2. Heurística de Hardware
-  // deviceMemory (RAM en GB) - Solo Chrome/Edge. Valores: 0.25, 0.5, 1, 2, 4, 8...
+  // 2. Hardware Heuristics
+  // deviceMemory (RAM in GB) - Chrome/Edge only. Values: 0.25, 0.5, 1, 2, 4, 8...
   const memory = nav.deviceMemory;
-  // hardwareConcurrency (Núcleos CPU)
+  // hardwareConcurrency (CPU Cores)
   const cores = navigator.hardwareConcurrency;
 
-  // Si tiene menos de 4GB de RAM o 2 o menos núcleos, asumimos gama baja.
+  // If less than 4GB RAM or 2 or fewer cores, assume low-end.
   return (memory !== undefined && memory < 4) || (cores !== undefined && cores <= 2);
 }
 

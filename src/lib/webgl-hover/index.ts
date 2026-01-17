@@ -1,7 +1,7 @@
 /**
- * WebGL Hover - Punto de entrada principal
+ * WebGL Hover - Main Entry Point
  *
- * Inicializa efectos WebGL hover con Curtains.js y GSAP
+ * Initializes WebGL hover effects with Curtains.js and GSAP
  */
 
 import { Curtains } from 'curtainsjs';
@@ -82,7 +82,7 @@ function initDebugMode(instances: WebglHover[], config: WebglHoverConfig): void 
   import('lil-gui').then(({ default: GUI }) => {
     const gui = new GUI({ title: 'WebGL Hover Debug' });
 
-    // Selector de instancia (sin opción "All")
+    // Instance selector (no "All" option)
     const targetOptions: Record<string, number> = {};
     instances.forEach((_, i) => {
       targetOptions[`Image ${i + 1}`] = i;
@@ -94,7 +94,7 @@ function initDebugMode(instances: WebglHover[], config: WebglHoverConfig): void 
       return instances[selectorConfig.target];
     };
 
-    // Cargar config inicial de la primera imagen
+    // Load initial config from the first image
     const initialConfig = instances[0].getConfig();
     const debugConfig = {
       intensity: initialConfig.intensity ?? config.intensity,
@@ -115,9 +115,9 @@ function initDebugMode(instances: WebglHover[], config: WebglHoverConfig): void 
       manualControl: false,
     };
 
-    // Controllers para actualizar valores al cambiar de imagen
+    // Controllers to update values when switching images
     const controllers: any[] = [];
-    // Controllers de animación (se deshabilitan en manual mode)
+    // Animation controllers (disabled in manual mode)
     const animControllers: any[] = [];
 
     const loadConfigFromInstance = (index: number) => {
@@ -134,19 +134,19 @@ function initDebugMode(instances: WebglHover[], config: WebglHoverConfig): void 
       debugConfig.easeIn = instanceConfig.easeIn ?? debugConfig.easeIn;
       debugConfig.easeOut = instanceConfig.easeOut ?? debugConfig.easeOut;
 
-      // Actualizar todos los controllers
+      // Update all controllers
       controllers.forEach((c) => c.updateDisplay());
     };
 
-    // Highlight inicial en la primera imagen
+    // Initial highlight on the first image
     instances[0].setDebugHighlight(true);
 
     gui.add(selectorConfig, 'target', targetOptions).name('Target').onChange((index: number) => {
-      // Quitar highlight de todas y poner en la seleccionada
+      // Remove highlight from all and apply to selected
       instances.forEach((inst, i) => inst.setDebugHighlight(i === index));
 
       loadConfigFromInstance(index);
-      // Reset timeline progress al cambiar
+      // Reset timeline progress on change
       timelineConfig.progress = 0;
       controllers.forEach((c) => c.updateDisplay());
     });
@@ -182,12 +182,12 @@ function initDebugMode(instances: WebglHover[], config: WebglHoverConfig): void 
         if (enabled) {
           setTargetProgress(timelineConfig.progress);
         } else {
-          // Volver a estado de reposo al desactivar
+          // Return to idle state when disabled
           setTargetProgress(0);
           timelineConfig.progress = 0;
           controllers.forEach((c) => c.updateDisplay());
         }
-        // Deshabilitar/habilitar controles de animación
+        // Disable/enable animation controllers
         animControllers.forEach((c) => c.enable(!enabled));
       })
     );
@@ -204,7 +204,7 @@ function initDebugMode(instances: WebglHover[], config: WebglHoverConfig): void 
     controllers.push(folderParams.add(debugConfig, 'noiseScale', 0, 20).name('Noise Scale').onChange(updateTargetInstance));
     controllers.push(folderParams.add(debugConfig, 'rgbShiftIntensity', 0, 1).name('RGB Shift').onChange(updateTargetInstance));
 
-    // Animation folder (se deshabilitan en manual mode)
+    // Animation folder (disabled in manual mode)
     const folderAnim = gui.addFolder('Animation');
     const durationInCtrl = folderAnim.add(debugConfig, 'durationIn', 0.1, 3).name('Duration In').onChange(updateTargetInstance);
     const durationOutCtrl = folderAnim.add(debugConfig, 'durationOut', 0.1, 3).name('Duration Out').onChange(updateTargetInstance);
