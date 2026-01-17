@@ -74,6 +74,31 @@ import WebglHoverImage from "../components/WebglHoverImage.astro";
 					map="displacements/06.jpg"
 					alt="Ambiente oscuro y elegante"
 				/>
+				<!-- Test: Imágenes cuadradas (500x500) -->
+				<WebglHoverImage
+					texture0="https://picsum.photos/seed/a1/500/500"
+					texture1="https://picsum.photos/seed/a2/500/500"
+					map="displacements/07.jpg"
+					intensity={0.6}
+					alt="Test cuadrado 500x500"
+				/>
+				<!-- Test: Imágenes horizontales/paisaje (640x400) -->
+				<WebglHoverImage
+					texture0="https://picsum.photos/seed/b1/640/400"
+					texture1="https://picsum.photos/seed/b2/640/400"
+					map="displacements/08.jpg"
+					intensity={0.5}
+					zoom={0.05}
+					alt="Test horizontal 640x400"
+				/>
+				<!-- Test: Imágenes muy verticales (300x700) -->
+				<WebglHoverImage
+					texture0="https://picsum.photos/seed/c1/300/700"
+					texture1="https://picsum.photos/seed/c2/300/700"
+					map="displacements/09.jpg"
+					intensity={0.8}
+					alt="Test vertical 300x700"
+				/>
 			</WebglHoverImages>
 		</main>
 	</body>
