@@ -3,11 +3,11 @@
   "version": "0.0.2",
   "type": "module",
   "description": "WebGL image hover effects for Astro with displacement transitions using Curtains.js and GSAP",
-  "author": "Ivan Alabizu",
+  "author": "Ivan Albizu",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ivanalabizu/astro-webgl-hover"
+    "url": "https://github.com/ivanalbizu/astro-webgl-hover"
   },
   "keywords": [
     "astro",
