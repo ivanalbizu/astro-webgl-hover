@@ -1,18 +1,18 @@
-# astro-webgl-hover
+# @ivanalbizu/astro-webgl-hover
 
 WebGL image hover effects for Astro with displacement transitions using Curtains.js and GSAP.
 
 ## Installation
 
 ```bash
-npm install astro-webgl-hover curtainsjs gsap
+npm install @ivanalbizu/astro-webgl-hover
 ```
 
 ## Usage
 
 ```astro
 ---
-import { WebglHoverImages, WebglHoverImage } from 'astro-webgl-hover';
+import { WebglHoverImages, WebglHoverImage } from '@ivanalbizu/astro-webgl-hover';
 ---
 
 <WebglHoverImages>
@@ -83,7 +83,7 @@ Enable `debug={true}` on `<WebglHoverImages>` to show a control panel where you 
 You can also import the library directly for more control:
 
 ```typescript
-import { initWebglHover, WebglHover } from 'astro-webgl-hover';
+import { initWebglHover, WebglHover } from '@ivanalbizu/astro-webgl-hover';
 
 // Initialize manually
 const instances = initWebglHover();

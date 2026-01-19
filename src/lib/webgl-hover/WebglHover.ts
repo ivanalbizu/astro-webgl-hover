@@ -6,8 +6,8 @@ import { Plane } from 'curtainsjs';
 import gsap from 'gsap';
 import type { WebglHoverOptions } from './config';
 import { degreesToRadians, calculateDisplacementVector } from './utils';
-import vertexShader from '@/shaders/vertex.glsl?raw';
-import fragmentShader from '@/shaders/fragment.glsl?raw';
+import vertexShader from '../../shaders/vertex.glsl?raw';
+import fragmentShader from '../../shaders/fragment.glsl?raw';
 
 export class WebglHover {
   private webGLCurtain: any;
