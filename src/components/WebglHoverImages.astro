@@ -53,18 +53,32 @@ const {
 <script>
   import { initWebglHover, destroyWebglHover } from '../lib/webgl-hover';
 
-  // Initial load
-  initWebglHover();
+  let isWebglHoverInitialized = false;
+
+  function initOnce() {
+    if (!isWebglHoverInitialized) {
+      initWebglHover();
+      isWebglHoverInitialized = true;
+    }
+  }
+
+  // Initial load (for pages without View Transitions)
+  initOnce();
 
   // Re-initialize after View Transitions navigation
   document.addEventListener('astro:page-load', () => {
-    destroyWebglHover();
-    initWebglHover();
+    // Skip first load (already initialized above)
+    if (isWebglHoverInitialized) {
+      destroyWebglHover();
+      isWebglHoverInitialized = false;
+    }
+    initOnce();
   });
 
   // Cleanup before navigation
   document.addEventListener('astro:before-swap', () => {
     destroyWebglHover();
+    isWebglHoverInitialized = false;
   });
 </script>
 

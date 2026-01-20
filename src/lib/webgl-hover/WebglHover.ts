@@ -84,6 +84,9 @@ export class WebglHover {
 
     if (this.plane) {
       this.plane.onReady(() => {
+        // Check if plane still exists (may have been destroyed during texture loading)
+        if (!this.plane) return;
+
         this.startRenderLoop();
         this.bindEvents();
         this.hideOriginalImage();
@@ -93,8 +96,10 @@ export class WebglHover {
 
   // Only update time uniform when animating (performance optimization)
   private startRenderLoop(): void {
+    if (!this.plane) return;
+
     this.plane.onRender(() => {
-      if (this.isAnimating) {
+      if (this.isAnimating && this.plane) {
         this.plane.uniforms.time.value += 0.01;
       }
     });
