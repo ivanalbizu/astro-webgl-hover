@@ -19,6 +19,10 @@ export * from './config';
 export * from './performance';
 export * from './utils';
 
+// Store references for cleanup
+let currentInstances: WebglHover[] = [];
+let currentCurtains: any = null;
+
 function getConfigFromDOM(): WebglHoverConfig {
   const configEl = document.getElementById('webgl-hover-config');
 
@@ -250,8 +254,30 @@ function initDebugMode(instances: WebglHover[], config: WebglHoverConfig): void 
   });
 }
 
+export function destroyWebglHover(): void {
+  // Destroy all instances
+  currentInstances.forEach((instance) => instance.destroy());
+  currentInstances = [];
+
+  // Dispose Curtains
+  if (currentCurtains) {
+    currentCurtains.dispose();
+    currentCurtains = null;
+  }
+
+  // Remove canvas container
+  const container = document.getElementById('canvas-container');
+  if (container) {
+    container.remove();
+  }
+}
+
 export function initWebglHover(): WebglHover[] {
   const planes = document.querySelectorAll('.whi-plane');
+
+  if (!planes.length) {
+    return [];
+  }
 
   if (shouldUseFallback()) {
     applyFallbackStyles(planes);
@@ -261,19 +287,19 @@ export function initWebglHover(): WebglHover[] {
   const config = getConfigFromDOM();
   const container = createCanvasContainer();
 
-  const webGLCurtain = new Curtains({
+  currentCurtains = new Curtains({
     container,
     pixelRatio: Math.min(1.5, window.devicePixelRatio),
   });
 
-  const instances: WebglHover[] = [];
+  currentInstances = [];
 
   document.querySelectorAll('.whi-slide').forEach((slide) => {
     const planeElement = slide.querySelector('.whi-plane') as HTMLElement;
 
     if (planeElement) {
       const options = getOptionsFromSlide(slide, config);
-      instances.push(new WebglHover(webGLCurtain, planeElement, options));
+      currentInstances.push(new WebglHover(currentCurtains, planeElement, options));
     }
   });
 
@@ -281,13 +307,13 @@ export function initWebglHover(): WebglHover[] {
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-      instances.forEach((instance) => instance.resize());
+      currentInstances.forEach((instance) => instance.resize());
     }, 150);
   });
 
   if (config.debug) {
-    initDebugMode(instances, config);
+    initDebugMode(currentInstances, config);
   }
 
-  return instances;
+  return currentInstances;
 }

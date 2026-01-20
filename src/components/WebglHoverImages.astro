@@ -51,8 +51,21 @@ const {
 <slot />
 
 <script>
-  import { initWebglHover } from '../lib/webgl-hover';
+  import { initWebglHover, destroyWebglHover } from '../lib/webgl-hover';
+
+  // Initial load
   initWebglHover();
+
+  // Re-initialize after View Transitions navigation
+  document.addEventListener('astro:page-load', () => {
+    destroyWebglHover();
+    initWebglHover();
+  });
+
+  // Cleanup before navigation
+  document.addEventListener('astro:before-swap', () => {
+    destroyWebglHover();
+  });
 </script>
 
 <style is:global>
